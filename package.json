@@ -30,6 +30,8 @@
   },
   "type": "module",
   "dependencies": {
-    "matter-js": "^0.19.0"
+    "@types/papaparse": "^5.3.14",
+    "matter-js": "^0.19.0",
+    "papaparse": "^5.4.1"
   }
 }
