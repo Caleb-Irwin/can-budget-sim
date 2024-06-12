@@ -28,7 +28,7 @@
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",")} million
 </h3>
 
-<div class="flex flex-row items-center justify-center">
+<div class="flex flex-row items-center justify-center pb-4">
   <img src="/nickel.png" alt="" class="w-10" />
   <p class="font-bold pl-2 text-lg">
     = ${(year.totalRevenues * (1000000 / 50 / 20))
