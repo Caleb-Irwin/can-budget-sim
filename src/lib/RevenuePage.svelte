@@ -20,6 +20,21 @@
     gstDollars: 10,
     customsDutiesDollars: 10,
   };
+
+  let revealed = false,
+    guess: typeof year;
+
+  function yearToJars(y: typeof year) {
+    return [
+      { title: "Personal Income Tax", amount: y.personalIncomeTaxDollars },
+      {
+        title: "Corporate Income Tax",
+        amount: y.corporateIncomeTaxDollars,
+      },
+      { title: "General Sales Tax", amount: y.gstDollars },
+      { title: "Customs Duties", amount: y.customsDutiesDollars },
+    ];
+  }
 </script>
 
 <h3 class="h3 text-center">
@@ -39,21 +54,18 @@
 
 {#key year}
   <JarSet
-    jars={[
-      { title: "Personal Income Tax", amount: year.personalIncomeTaxDollars },
-      {
-        title: "Corporate Income Tax",
-        amount: year.corporateIncomeTaxDollars,
-      },
-      { title: "General Sales Tax", amount: year.gstDollars },
-      { title: "Customs Duties", amount: year.customsDutiesDollars },
-    ]}
-    otherTitle="Other"
+    jars={yearToJars(year)}
+    otherTitle="Other Revenue"
+    guess={guess ? yearToJars(guess) : undefined}
   />
 {/key}
 <div class="flex flex-row justify-center">
   <button
     class="btn btn-lg variant-glass-primary font-semibold mt-4"
-    on:click={() => (year = actualYear)}>Reveal Revenue</button
+    on:click={() => {
+      revealed = true;
+      guess = year;
+      year = actualYear;
+    }}>Reveal Revenue</button
   >
 </div>

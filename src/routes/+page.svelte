@@ -7,6 +7,10 @@
   $: year = data[i];
 </script>
 
+<svelte:head>
+  <title>Canadian Federal Revenue</title>
+</svelte:head>
+
 <div class="flex flex-col items-center justify-center min-h-screen p-4">
   <h1 class="h1 text-center">Canadian Federal Revenue</h1>
 

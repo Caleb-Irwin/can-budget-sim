@@ -5,7 +5,8 @@
   export let value = 10,
     disabled = false,
     title = "Amount",
-    other: number = 50;
+    other: number = 50,
+    guessAmount: number | undefined;
 
   $: {
     if (disabled) {
@@ -37,4 +38,8 @@
     </div>
   </RangeSlider>
   <Jar amountCents={value * 100} />
+
+  {#if guessAmount}
+    ${value - guessAmount}
+  {/if}
 </div>
