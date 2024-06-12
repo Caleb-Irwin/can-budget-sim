@@ -101,7 +101,7 @@
     centsLeft = centsLeft - loonies * 100;
     const quarters = Math.floor((centsLeft / 25) * 0.85);
     centsLeft = centsLeft - quarters * 25;
-    const dimes = Math.floor((centsLeft / 10) * 0.9);
+    const dimes = Math.floor((centsLeft / 10) * 0.6);
     centsLeft = centsLeft - dimes * 10;
     const nickels = Math.round(centsLeft / 5);
     centsLeft = centsLeft - nickels * 5;
@@ -126,7 +126,7 @@
   };
 
   function addCoin(size: number, color: string, texture: string) {
-    size = size * 0.95;
+    size = size * 0.93;
     const coinBody = Bodies.circle(
       (WIDTH + size) / 2 + (Math.random() - 0.5) * 100,
       (HEIGHT + size) / 2 + (Math.random() - 0.5) * 250,
@@ -181,35 +181,29 @@
         currentCoins.toonies,
         28,
         "#C7C7C7",
-        "./static/toonie.png"
+        "./toonie.png"
       );
       setCoins(
         coins.loonies,
         currentCoins.loonies,
         26,
         "#B3AB6B",
-        "./static/loonie.png"
+        "./loonie.png"
       );
       setCoins(
         coins.quarters,
         currentCoins.quarters,
         24,
         "#8E8E8E",
-        "./static/quarter.png"
+        "./quarter.png"
       );
-      setCoins(
-        coins.dimes,
-        currentCoins.dimes,
-        18,
-        "#BABABA",
-        "./static/dime.png"
-      );
+      setCoins(coins.dimes, currentCoins.dimes, 18, "#BABABA", "./dime.png");
       setCoins(
         coins.nickels,
         currentCoins.nickels,
         21,
         "#E4E4E4",
-        "./static/nickel.png"
+        "./nickel.png"
       );
     }
   }
