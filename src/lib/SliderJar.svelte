@@ -22,9 +22,14 @@
 
   let internalValue = value;
 
-  $: percentOff = guessAmount
-    ? Math.round(((value - guessAmount) / value) * 100)
-    : undefined;
+  $: percentOff =
+    guessAmount !== undefined
+      ? value === 0
+        ? guessAmount === 0
+          ? 0
+          : -Infinity
+        : Math.round(((value - guessAmount) / value) * 100)
+      : undefined;
 </script>
 
 <div class="flex flex-col items-center p-2">
@@ -43,7 +48,7 @@
   </RangeSlider>
   <Jar amountCents={value * 100} />
 
-  {#if guessAmount}
+  {#if guessAmount !== undefined}
     <p
       class="text-lg {percentOff === undefined
         ? ''

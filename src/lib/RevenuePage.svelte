@@ -43,18 +43,20 @@
 
   $: score =
     guess !== undefined
-      ? Math.abs(
-          (1 -
-            Math.round(
-              jars
-                .map((j, i) =>
-                  Math.abs(j.amount - (guess as typeof jars)[i].amount)
-                )
-                .reduce((prev, curr) => prev + curr, 0)
-            ) /
-              2 /
-              50) *
-            100
+      ? Math.round(
+          Math.abs(
+            (1 -
+              Math.round(
+                jars
+                  .map((j, i) =>
+                    Math.abs(j.amount - (guess as typeof jars)[i].amount)
+                  )
+                  .reduce((prev, curr) => prev + curr, 0)
+              ) /
+                2 /
+                50) *
+              100
+          )
         )
       : undefined;
 </script>
