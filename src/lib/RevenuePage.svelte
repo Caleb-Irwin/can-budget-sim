@@ -1,5 +1,5 @@
 <script lang="ts">
-  import JarSet from "./JarSet.svelte";
+  import SliderJar from "./SliderJar.svelte";
 
   export let year: {
     year: number;
@@ -22,7 +22,7 @@
   };
 
   let revealed = false,
-    guess: typeof year;
+    guess: undefined | ReturnType<typeof yearToJars> = undefined;
 
   function yearToJars(y: typeof year) {
     return [
@@ -35,6 +35,28 @@
       { title: "Customs Duties", amount: y.customsDutiesDollars },
     ];
   }
+
+  let jars = yearToJars(year);
+  let otherTitle = "Other Revenue";
+  $: other =
+    Math.round((50 - jars.reduce((a, b) => a + b.amount, 0)) * 100) / 100;
+
+  $: score =
+    guess !== undefined
+      ? Math.abs(
+          (1 -
+            Math.round(
+              jars
+                .map((j, i) =>
+                  Math.abs(j.amount - (guess as typeof jars)[i].amount)
+                )
+                .reduce((prev, curr) => prev + curr, 0)
+            ) /
+              2 /
+              50) *
+            100
+        )
+      : undefined;
 </script>
 
 <h3 class="h3 text-center">
@@ -52,20 +74,41 @@
   </p>
 </div>
 
-{#key year}
-  <JarSet
-    jars={yearToJars(year)}
-    otherTitle="Other Revenue"
-    guess={guess ? yearToJars(guess) : undefined}
+<div
+  class="container h-full mx-auto flex flex-row flex-wrap justify-center items-center"
+>
+  {#each jars as jar, i}
+    <SliderJar
+      bind:value={jar.amount}
+      {other}
+      title={jar.title}
+      disabled={guess !== undefined}
+      guessAmount={guess ? guess[i].amount : undefined}
+    />
+  {/each}
+  <SliderJar
+    value={other}
+    disabled
+    title={otherTitle}
+    guessAmount={guess
+      ? Math.round((50 - guess.reduce((a, b) => a + b.amount, 0)) * 100) / 100
+      : undefined}
   />
-{/key}
-<div class="flex flex-row justify-center">
-  <button
-    class="btn btn-lg variant-glass-primary font-semibold mt-4"
-    on:click={() => {
-      revealed = true;
-      guess = year;
-      year = actualYear;
-    }}>Reveal Revenue</button
-  >
 </div>
+
+{#if guess === undefined}
+  <div class="flex flex-row justify-center">
+    <button
+      class="btn btn-lg variant-glass-primary font-semibold mt-4"
+      on:click={() => {
+        revealed = true;
+        guess = jars;
+        jars = yearToJars(actualYear);
+      }}>Reveal Revenue</button
+    >
+  </div>
+{:else if score}
+  <div class="h-10 text-2xl font-semibold text-primary-500">
+    Score: {score < 0 ? "0" : score}%
+  </div>
+{/if}

@@ -29,4 +29,18 @@
   {#key year}
     <Page {year} />
   {/key}
+
+  {#if i === 0}
+    <div class="card m-8 p-8 w-full max-w-lg">
+      <span class="font-semibold text-lg">Tutorial</span>
+      <ul>
+        1. Guess the percentage of federal revenue that comes from each category
+        using the sliders.
+      </ul>
+      <ul>2. Reveal the actual revenue percent.</ul>
+      <ul>
+        3. Read your score and press the right arrow to go to the next year.
+      </ul>
+    </div>
+  {/if}
 </div>

@@ -21,6 +21,10 @@
   }
 
   let internalValue = value;
+
+  $: percentOff = guessAmount
+    ? Math.round(((value - guessAmount) / value) * 100)
+    : undefined;
 </script>
 
 <div class="flex flex-col items-center p-2">
@@ -40,6 +44,17 @@
   <Jar amountCents={value * 100} />
 
   {#if guessAmount}
-    ${value - guessAmount}
+    <p
+      class="text-lg {percentOff === undefined
+        ? ''
+        : Math.abs(percentOff) < 20 || Math.abs(value - guessAmount) < 3
+          ? 'text-green-500'
+          : 'text-red-500'}"
+    >
+      <span class="font-bold"
+        >${Math.round((value - guessAmount) * 100) / 100}</span
+      >
+      {percentOff}%
+    </p>
   {/if}
 </div>
